@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+ "http://www.w3.org/TR/xhmtl11/DTD/xhtml11.dtd">
+
+<!-- XML/XHTML boilerplate code -->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+  <head>
+    <link rel="stylesheet" href="main.css">     
+    <title>Feedback - Zach Shaver's Page</title>
+  </head>
+
+  <body>  
+
+<!--Banner across top -->
+    <div id="header">
+      <h1>Zach Shaver's Page</h1>
+    </div>
+
+<!-- Horizontal nav under banner -->    
+    <ul id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="schedule.html">Schedule</a></li>
+      <li><a href="interests.html">Interests</a></li>
+      <li><a href="imagemap.html">Image Map</a></li>
+      <li><a class="active" style="background-color: #e6e6e6;" href="feedback.html">Feedback Form</a></li>
+      <li><a href="citations.html">Citations</a></li>
+    </ul>  
+
+<!-- Content filling rest of screen -->
+    <div id="content">
+      <h2>Feedback Form</h2>
+        <table style="width:100%">
+          <tr>
+            <td>
+                <img src="wrench_left.jpg"/>  
+            </td>
+            <td>
+                <div style="border: 5px solid #006699; background-color: #ffffff; padding: 40px; max-width: 550px; display: block; margin: auto;">
+                  <form action="mailto:shaverz@uwindsor.ca" method="post" enctype="text/plain">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="Name">
+
+                    <label for="email">E-mail Address</label>
+                    <input type="text" id="email" name="Email_Address">
+                    <label for="rating">Site Rating</label>
+                    <select id="rating" name="Rating">
+                      <option value="0">0 Stars</option>
+                      <option value="1">1 Star</option>
+                      <option value="2">2 Stars</option>
+                      <option value="3">3 Stars</option>
+                      <option value="4">4 Stars</option>
+                      <option value="5">5 Stars</option>
+                    </select>
+                    <label for="comment">Comment</label>
+                    <textarea id="comment" name="Comment"></textarea>
+
+                    <input type="submit" value="Submit">
+                  </form>
+                </div>
+            </td>
+            <td>
+                <img src="wrench_right.jpg" style="float:right;"/>  
+            </td>
+          </tr>
+        </table>
+        <p style="text-align:center;">** Form submitted to <a href="mailto:shaverz@uwindsor.ca">shaverz@uwindsor.ca</a> using your default email application. Please hit send once inside e-mail.</p>
+    </div>
+
+  </body>    
+
+</html>

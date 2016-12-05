@@ -1,0 +1,153 @@
+/* Layout - using familiar "Facebook" colors */
+body {
+	background-color: #e6e6e6;
+}
+
+#header {
+    background-color:#006699;
+    color:#ffffff;
+    text-align:center;
+    padding:5px;
+}
+
+#content {
+	background-color: #e6e6e6;
+    padding:10px;
+}
+
+/* Navigation Menu */
+/* Styled to look like file folder.
+	All Tabs have black bar on bottom by default,
+	but active one hides it to create illusion */
+ul#menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000000;
+}
+
+ul#menu li {
+    float: left;
+}
+
+ul#menu li a {
+    color: #ffffff;
+    display: inline-block;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #000000;
+}
+
+ul#menu li a:hover {
+    background-color: #cccccc;
+    color:#000000;
+
+}
+
+ul#menu .active {
+    color: #000000;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: #e6e6e6;
+    margin-bottom: -1px;
+}
+
+/* Table Style */
+    /* for use on schedule, and citations page */
+    table#reg {
+        width: 100%;
+        background-color: #ffffff;
+    }
+
+    table#reg td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    table#reg tr:hover{background-color:#f5f5f5}
+
+    /* for use on interests page */
+    table#interests {
+        width: 100%;
+        background-color: #ffffff;
+    }
+    table#interests td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        width: 33.33%;
+        vertical-align: top;
+    }
+
+    table#interests li:hover {
+        font-weight: bold;
+        background-color: #f5f5f5;
+    }
+
+/* Form Styling */
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+textarea {
+    width: 100%;
+    height: 200px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #0088cc;
+    color: #ffffff;
+    padding: 14px 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 4px;
+}
+
+input[type=submit]:hover {
+    background-color: #006699;
+}
+
+/* Content Styling */
+
+h2 {
+	text-align: center;
+}
+
+h3 {
+    margin-left: 20px;
+}
+
+.paper_borders{
+    border-right-style: solid;
+    border-right-width: thin;
+}
+
+.captioned_photo{
+    border: solid;
+    border-width: 1px;
+    width: 248px;
+    margin: auto;
+    text-align: center;
+    font-size: 0.85em;
+    background-color: #e6e6e6;
+    padding: 5px;
+}
