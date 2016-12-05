@@ -7,8 +7,6 @@ TITLE  Assignment 2    (Ass_2.asm)
 ; Include Irvine32 library routines
 INCLUDE Irvine32.inc
 
-; Enter constants and EQU directives up here
-
 .data
 	prompt	BYTE		"Enter a number between 0 and 65535: ",0
 	badnum	BYTE		"Invalid number.",0
