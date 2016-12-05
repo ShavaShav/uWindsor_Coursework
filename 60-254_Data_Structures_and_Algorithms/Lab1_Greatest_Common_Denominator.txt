@@ -1,0 +1,157 @@
+Script started on Mon 23 May 2016 08:38:07 PM EDT
+]0;zach@zach-Inspiron-5548: ~/Dropbox/School/60-254 Data Structures/Labs[01;32mzach@zach-Inspiron-5548[00m:[01;34m~/Dropbox/School/60-254 Data Structures/Labs[00m$ cat La b1Shaverz.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+
+#define CASES 50	// Number of test cases for GCD function
+#define MAX 99		// Maximum for random int generator: 1 <= m <= n <= MAX
+#define DISPLAY 1	// 1 to display table, 0 otherwise
+
+unsigned int GCD(unsigned int m, unsigned int n);
+
+int main()
+{
+	puts("Euclid's Algorithm -> GCD(m,n) = GCD(n, m mod n)\n");
+
+	srand(time(NULL));	// set random seed
+    size_t i;
+	for (i = 0; i < CASES; i++)
+	{
+		// set m and n to random numbers between 1 and MAX inclusive
+		unsigned int m = (int) (rand() % MAX+1);
+		unsigned int n = (int) (rand() % MAX+1);
+		// compute and display GCD
+		GCD(m, n);
+	}
+    return 0;
+}
+
+/*
+	Computes and displays the greatest common denominator in O(2logn+1) time.
+	Uses Euclids algorithm: gcd(m,n) = gcd(n, m%n). Also computes Bezout's coefficients u & v
+	using the Extended version: um + vm = gcd(m, n). Displays results in a tabular form.
+	I/P: two positive integers: (m, n) > 0
+	O/P: the greatest common denominator
+*/
+unsigned int GCD(unsigned int m, unsigned int n)
+{
+	static unsigned int num_case = 1;           // current case number
+	unsigned int num_div = 0;	                // counter for number of euclidean divisions
+	unsigned int r, m_prime = m, n_prime = n; 	// initalize r, m' and n'; store (m'<-m) and (n'<-n)
+	unsigned int worstcase;     // storing number of steps for the worst case O(2logn+1)
+
+	// Extended algo's values are set as follows so that if (m%n) is already 0, then n is the GCD:
+	int u = 0, v = 1, u_prime = 1, v_prime = 0;	// (u)m + (v)n = (0)m + (1)n = n = GCD
+
+	// calculate worst case using smallest number
+	if (n <= m)
+		worstcase = (2*((int)(log2(n))))+1;
+	else
+		worstcase = (2*((int)(log2(m))))+1;
+
+	// loop until m is divisible by n (aka remainder is 0)
+	while (m_prime % n_prime != 0)
+	{
+		// Extention to compute "Bezout coefficients" u and v:
+		int temp1 = u;	// store values for u and v
+		int temp2 = v;
+		// compute new values for u and v, which are multiple of m'/n'
+		u = u_prime - ((m_prime/n_prime)*u);
+		v = v_prime - ((m_prime/n_prime)*v);
+		/* after this step, if (m'<n') then u and v values are swapped. (m'/n' = 0)
+							if (m'>n') then (um + vn) = (n' - rem).
+		   so that once remainder is 0 (exit case), (um + vn) = (n') which is correct.	*/
+		u_prime = temp1;	// update u' and v' with the old values for u and v
+		v_prime = temp2;
+
+		// Euclids Algorithm to compute GCD:
+        // replace m' <- n', and n' <- m'%n'
+		r = m_prime % n_prime;
+		m_prime = n_prime;
+		n_prime = r;
+
+		num_div++;	// count the euclidean divison
+	}	// end while
+	// Print header before first case only.
+	if (DISPLAY && num_case == 1) printf("%-5s%-6s%-6s%-6s%-6s| %6s =  %-2s | %10s <= %-8s\n",
+	 	"Case", "m", "n", "u", "v", "um+vn", "n'", "Divisions", "2logn+1");
+	// print results of case
+	if (DISPLAY) printf("%-5d%-6d%-6d%-6d%-6d| %5d  =  %-2d | %9d  <=  %-7d\n",
+		num_case, m, n, u, v, ((u*m)+(v*n)), n_prime, num_div, worstcase);
+
+	num_case++;	// increment case counter for next case
+
+	return n_prime;	// return the GCD
+}
+]0;zach@zach-Inspiron-5548: ~/Dropbox/School/60-254 Data Structures/Labs[01;32mzach@zach-Inspiron-5548[00m:[01;34m~/Dropbox/School/60-254 Data Structures/Labs[00m$ cc Lab 1Shaverz.c -lm
+]0;zach@zach-Inspiron-5548: ~/Dropbox/School/60-254 Data Structures/Labs[01;32mzach@zach-Inspiron-5548[00m:[01;34m~/Dropbox/School/60-254 Data Structures/Labs[00m$ ./a.ou t
+Euclid's Algorithm -> GCD(m,n) = GCD(n, m mod n)
+
+Case m     n     u     v     |  um+vn =  n' |  Divisions <= 2logn+1 
+1    1     99    1     0     |     1  =  1  |         1  <=  1      
+2    33    21    2     -3    |     3  =  3  |         3  <=  9      
+3    7     27    4     -1    |     1  =  1  |         3  <=  5      
+4    43    9     4     -19   |     1  =  1  |         3  <=  7      
+5    17    82    29    -6    |     1  =  1  |         5  <=  9      
+6    88    25    2     -7    |     1  =  1  |         3  <=  9      
+7    24    66    3     -1    |     6  =  6  |         3  <=  9      
+8    68    38    -5    9     |     2  =  2  |         4  <=  11     
+9    35    87    5     -2    |     1  =  1  |         3  <=  11     
+10   21    42    1     0     |    21  =  21 |         1  <=  9      
+11   19    6     1     -3    |     1  =  1  |         1  <=  5      
+12   94    2     0     1     |     2  =  2  |         0  <=  3      
+13   55    84    -29   19    |     1  =  1  |         6  <=  11     
+14   52    35    -2    3     |     1  =  1  |         2  <=  11     
+15   6     65    11    -1    |     1  =  1  |         3  <=  5      
+16   34    6     -1    6     |     2  =  2  |         2  <=  5      
+17   64    64    0     1     |    64  =  64 |         0  <=  13     
+18   26    68    -13   5     |     2  =  2  |         6  <=  9      
+19   91    66    -29   40    |     1  =  1  |         6  <=  13     
+20   76    8     1     -9    |     4  =  4  |         1  <=  7      
+21   49    62    19    -15   |     1  =  1  |         5  <=  11     
+22   32    70    11    -5    |     2  =  2  |         3  <=  11     
+23   27    99    4     -1    |     9  =  9  |         3  <=  9      
+24   8     61    23    -3    |     1  =  1  |         5  <=  7      
+25   86    27    11    -35   |     1  =  1  |         3  <=  9      
+26   1     3     1     0     |     1  =  1  |         1  <=  1      
+27   30    92    -3    1     |     2  =  2  |         2  <=  9      
+28   2     82    1     0     |     2  =  2  |         1  <=  3      
+29   76    51    -2    3     |     1  =  1  |         2  <=  11     
+30   17    81    -19   4     |     1  =  1  |         4  <=  9      
+31   16    49    -3    1     |     1  =  1  |         2  <=  9      
+32   86    77    -17   19    |     1  =  1  |         4  <=  13     
+33   13    10    -3    4     |     1  =  1  |         2  <=  7      
+34   44    4     0     1     |     4  =  4  |         0  <=  5      
+35   76    20    -1    4     |     4  =  4  |         2  <=  9      
+36   9     23    -5    2     |     1  =  1  |         4  <=  7      
+37   80    40    0     1     |    40  =  40 |         0  <=  11     
+38   92    7     1     -13   |     1  =  1  |         1  <=  5      
+39   37    98    -45   17    |     1  =  1  |         6  <=  11     
+40   65    21    -10   31    |     1  =  1  |         2  <=  9      
+41   25    66    -29   11    |     1  =  1  |         6  <=  9      
+42   23    52    -9    4     |     1  =  1  |         4  <=  9      
+43   58    24    5     -12   |     2  =  2  |         3  <=  9      
+44   34    35    -1    1     |     1  =  1  |         2  <=  11     
+45   73    50    -13   19    |     1  =  1  |         4  <=  11     
+46   14    88    19    -3    |     2  =  2  |         3  <=  7      
+47   96    1     0     1     |     1  =  1  |         0  <=  1      
+48   64    10    -2    13    |     2  =  2  |         2  <=  7      
+49   10    8     1     -1    |     2  =  2  |         1  <=  7      
+50   11    83    -15   2     |     1  =  1  |         4  <=  7      
+]0;zach@zach-Inspiron-5548: ~/Dropbox/School/60-254 Data Structures/Labs[01;32mzach@zach-Inspiron-5548[00m:[01;34m~/Dropbox/School/60-254 Data Structures/Labs[00m$ ls -l
+total 144
+-rwxrwxr-x 1 zach zach  8856 May 23 20:38 [0m[01;32ma.out[0m
+-rw-rw-r-- 1 zach zach   289 May 23 20:17 input.txt
+-rw-rw-r-- 1 zach zach 69062 May 23 15:17 lab1.exe
+-rw-rw-r-- 1 zach zach  1815 May 23 15:17 lab1.o
+-rw-rw-r-- 1 zach zach  3144 May 23 20:26 lab1_randominput.c
+-rw-rw-r-- 1 zach zach  3145 May 23 20:31 Lab1Shaverz.c
+-rw-rw-r-- 1 zach zach  4096 May 23 20:38 Lab1Shaverz.txt
+-rw-rw-r-- 1 zach zach  3344 May 23 20:31 lab1Shaverz_userinput.c
+-rw-rw-r-- 1 zach zach  1499 May 19 11:29 lab1 (zach-Inspiron-5548's conflicted copy 2016-05-20).c
+]0;zach@zach-Inspiron-5548: ~/Dropbox/School/60-254 Data Structures/Labs[01;32mzach@zach-Inspiron-5548[00m:[01;34m~/Dropbox/School/60-254 Data Structures/Labs[00m$ exit
+exit
+
+Script done on Mon 23 May 2016 08:39:04 PM EDT
